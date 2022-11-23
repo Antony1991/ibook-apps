@@ -11,4 +11,5 @@ module.exports = app => {
    */
   router.post('/api/v1/users/create', controller.v1.user.create);
   router.post('/api/v1/users/login', controller.v1.user.login);
+  router.post('/api/v1/users/findOne', controller.v1.user.findOne);
 };

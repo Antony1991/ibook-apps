@@ -1,7 +1,4 @@
-/* eslint valid-jsdoc: "off" */
-
 'use strict';
-
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -16,10 +13,11 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1669041673154_8743';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['jwtHandler'];
   config.security = {
     csrf: {
       headerName: 'x-csrf-token',
+      enable: false,
       // 过滤不需要进行csrf验证的接口
       ignore: ctx => {
         return [

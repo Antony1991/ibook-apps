@@ -2,6 +2,15 @@ const { Controller } = require('egg');
 
 class UserController extends Controller {
   /**
+   * 寻找单个用户
+   */
+  async findOne() {
+    const { ctx, service } = this;
+    ctx.logger.info('用户', ctx.request.body);
+    const res = await service.user.findOne(ctx.request.body.id);
+    return ctx.helper.body.SUCCESS({ ctx, res });
+  }
+  /**
    * 创建用户
    */
   async create() {

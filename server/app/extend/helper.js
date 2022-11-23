@@ -35,4 +35,20 @@ module.exports.body = {
       msg,
     };
   },
+  // jwt未认证
+  UNAUTHORIZED({ ctx, res = null, msg = '未认证', code = 401 }) {
+    ctx.body = {
+      code,
+      data: res,
+      msg,
+    };
+  },
+  // [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。
+  FORBIDDEN({ ctx, res = null, msg = '权限不足，访问被禁止' }) {
+    ctx.body = {
+      code: 403,
+      data: res,
+      msg,
+    };
+  },
 };

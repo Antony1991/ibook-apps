@@ -2,6 +2,13 @@ const { Service } = require('egg');
 const { Op } = require('sequelize');
 
 class UserService extends Service {
+  async findOne(id) {
+    const { ctx } = this;
+    return await ctx.model.User.findOne({
+      where: { id },
+      attributes: { exclude: ['password', 'deleted_at'] },
+    });
+  }
   // create
   async create(payload) {
     const { ctx } = this;
@@ -74,9 +81,11 @@ class UserService extends Service {
   // 登录用户，获取到user后处理
   async loginDeal(ctx, user) {
     const { app } = ctx;
+    const current_time = app.dayjs()
+      .format('YYYY-MM-DD HH:mm:ss');
     user.update({
-      last_login: app.dayjs()
-        .format('YYYY-MM-DD HH:mm:ss'),
+      last_login: current_time,
+      updated_at: current_time,
     });
     const requestData = { userInfo: { id: user.id, username: user.username } };
     // jwt验证
