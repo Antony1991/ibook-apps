@@ -12,6 +12,7 @@ module.exports = (options, app) => {
         await next();
       } else {
         const token = ctx.request.headers.authorization && ctx.request.headers.authorization.split('Bearer ')[1];
+        console.log('toekn', ctx.request.headers);
         if (!token) {
           return ctx.helper.body.UNAUTHORIZED({ ctx });
         }

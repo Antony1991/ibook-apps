@@ -45,7 +45,7 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
-    jwt_exp: 60 * 10, // jwt过期时间(秒)
+    jwt_exp: 60 * 60 * 10, // jwt过期时间(秒)
   };
 
   return {
