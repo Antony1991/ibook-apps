@@ -11,10 +11,9 @@ import { baseApi } from '@/services/baseApi'
 export const chartsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     wordClouds: builder.query({
-      query: (credentials) => ({
+      query: () => ({
         url: 'https://gw.alipayobjects.com/os/antvdemo/assets/data/antv-keywords.json',
-        method: 'GET',
-        body: credentials,
+        method: 'get',
       }),
     }),
   }),

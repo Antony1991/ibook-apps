@@ -53,7 +53,13 @@ const FormRender: React.FC<FormRenderProp> = (props) => {
           <Form.Item
             label={label}
             name={name}
+            key={name}
             initialValue={initValue}
+            getValueFromEvent={(e) => {
+              const value =
+                e && e.target ? e.target.value.replace(/^\s+|\s+$/g, '') : e
+              return value
+            }}
             {...formItemProps}
           >
             {renderCom()}

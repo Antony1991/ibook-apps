@@ -49,7 +49,7 @@ export const usersSlice = createSlice({
     builder.addMatcher(
       userApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        state.token = payload.data as string
+        state.token = payload.accessToken as string
         setToken(state.token)
       }
     )

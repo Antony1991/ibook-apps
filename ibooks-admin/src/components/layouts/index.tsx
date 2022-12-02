@@ -25,7 +25,7 @@ const Layouts: React.FC = () => {
   }, [])
 
   return useMemo(() => {
-    if (token) {
+    if (!token) {
       return <Navigate to="/login" />
     }
     return (

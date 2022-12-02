@@ -15,23 +15,24 @@ interface SelectRenderProps extends PayloadProp {
 }
 const SelectRender: React.FC<SelectRenderProps> = ({
   options,
-  currentProps,
+  currentProps = {},
+  ...newProps
 }) => {
   return useMemo(() => {
     // 参数必须包含options
     if (!options) {
       console.warn('selectRender: 必须包含options参数')
+      return null
     }
     return (
-      <Select style={{ minWidth: 150 }} {...currentProps}>
-        {options?.map((item) => (
-          <Select.Option key={item.key} value={item.value}>
-            {item.label}
-          </Select.Option>
-        ))}
-      </Select>
+      <Select
+        style={{ minWidth: 150 }}
+        options={options}
+        {...currentProps}
+        {...newProps}
+      />
     )
-  }, [options, currentProps])
+  }, [options, currentProps, newProps])
 }
 
 export default (props: SelectRenderProps) => <SelectRender {...props} />

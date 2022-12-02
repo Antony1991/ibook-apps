@@ -20,10 +20,12 @@ import { useLoginMutation } from '@/services/user/userApi'
 const LoginPage = () => {
   const navigate = useNavigate()
   const [login, { isLoading }] = useLoginMutation()
-  const onFinish = useCallback((values: any) => {
-    login(values)
-    console.log(values)
-    navigate('/app/member-manange/member-list')
+  const onFinish = useCallback(async (values: any) => {
+    const { data }: any = await login(values)
+    if (data.accessToken) {
+      navigate('/app/welcome', { replace: true })
+    }
+    // navigate('/app/member-manange/member-list')
   }, [])
   return useMemo(
     () => (
@@ -47,7 +49,7 @@ const LoginPage = () => {
               </Form.Item>
               <Form.Item
                 name="password"
-                rules={[{ required: true, message: '密码：123456' }]}
+                rules={[{ required: true, message: '请输入密码' }]}
               >
                 <Input.Password
                   prefix={<LockOutlined />}
@@ -55,7 +57,7 @@ const LoginPage = () => {
                   iconRender={(visible) =>
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                   }
-                  placeholder="请输入密码"
+                  placeholder="密码：123456"
                 />
               </Form.Item>
               <Form.Item>

@@ -128,7 +128,7 @@ export type PayloadProp = {
 export type OptionProp = {
   key: string
   label: string
-  value: string
+  value: string | number | undefined
 }
 export type RenderType = 'input' | 'select'
 export type SearchForm = {

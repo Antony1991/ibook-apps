@@ -17,11 +17,13 @@ import { baseApi } from '@/services/baseApi'
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (credentials) => ({
-        url: '/users/login',
-        method: 'POST',
-        body: credentials,
-      }),
+      query: (credentials = {}) => {
+        return {
+          url: '/users/login',
+          method: 'post',
+          data: credentials,
+        }
+      },
     }),
   }),
 })

@@ -20,6 +20,7 @@ import LoginPage from '@/pages/login/Login'
 import MemberList from '@/pages/member-manager/member-list'
 import NotFoundPage from '@/pages/not-found'
 import RolePrivige from '@/pages/system-manager/role-privige'
+import SystemAccount from '@/pages/system-manager/system-account'
 import WelcomePagee from '@/pages/welcome/Welcome'
 import { createBrowserRouter } from 'react-router-dom'
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: `${baseRouteUrl}/system-manager/role-privige`,
         element: <RolePrivige />,
+      },
+      {
+        path: `${baseRouteUrl}/system-manager/system-account`,
+        element: <SystemAccount />,
       },
       {
         path: `${baseRouteUrl}/component-manager/rich-text`,

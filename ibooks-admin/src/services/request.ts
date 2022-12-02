@@ -17,10 +17,10 @@ import axios, {
 import type { BaseQueryFn } from '@reduxjs/toolkit/query'
 
 const instance: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:8888/api',
+  baseURL: '/api/v1',
   timeout: 1000 * 50,
   headers: {
-    'Content-Type': 'application/json',
+    'content-type': 'application/json',
   },
 })
 // 请求拦截
@@ -28,9 +28,9 @@ instance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // 请求头token
     const token = getToken()
-    if (token) {
-      ;(config.headers as AxiosRequestHeaders)[
-        'Authrozation'
+    if (token && !config.url?.startsWith('https')) {
+      ; (config.headers as AxiosRequestHeaders)[
+        'Authorization'
       ] = `Bearer ${token}`
     }
     return config
@@ -47,6 +47,9 @@ instance.interceptors.response.use(
     const data = response.data
     if (data.code === 10001) {
       // 登录过期
+    }
+    if (response.config.url?.startsWith('https:')) {
+      return response
     }
     return response.data
   },
@@ -71,7 +74,7 @@ export const axiosBaseQuery = (): BaseQueryFn<
   unknown
 > => {
   return ({ url, method, data, params }) => {
-    return axios({ url, method, data, params })
+    return instance({ url, method, data, params })
   }
 }
 // export default {

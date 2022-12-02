@@ -61,11 +61,9 @@ const BookProTable = (props: ProTableProps) => {
         values,
         clearPagination,
       })
-      setTimeout(() => {
-        setloading(false)
-        setpaginationParam((r) => ({ ...r, current, total: response.total }))
-        setresult((c) => ({ ...c, dataSource: response.data }))
-      }, 2000)
+      setloading(false)
+      setpaginationParam((r) => ({ ...r, current, total: response.total }))
+      setresult((c) => ({ ...c, dataSource: response.data }))
       return Promise.resolve()
     },
     [request, paginationParam.pageSize]
@@ -124,7 +122,7 @@ const BookProTable = (props: ProTableProps) => {
   })
   const tableDom = <Table {...getTableProps()} />
   /** 内置的查询工具栏 */
-  const searchForm = useMemo(() => {
+  const searchForm = () => {
     if (Array.isArray(searchFields)) {
       return (
         <FormRender
@@ -146,7 +144,7 @@ const BookProTable = (props: ProTableProps) => {
       )
     }
     return null
-  }, [fetchData, loading, onReset, searchFields])
+  }
   const toolBar = useMemo(() => {
     if (toolBarRender && typeof toolBarRender === 'function') {
       return <div className={styles.toolBar}>{toolBarRender()}</div>
@@ -156,7 +154,7 @@ const BookProTable = (props: ProTableProps) => {
   const renderTable = () => {
     return (
       <>
-        {searchForm}
+        {searchForm()}
         <Card>
           {toolBar}
           {tableDom}

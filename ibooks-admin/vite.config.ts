@@ -14,6 +14,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server: {
     open: true,
+    cors: true,
+    proxy: {
+      '^/api/v1': {
+        target: 'http://localhost:7001',
+        changeOrigin: true,
+      },
+    },
   },
   resolve: {
     alias: {
