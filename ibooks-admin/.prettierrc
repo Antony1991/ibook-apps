@@ -1,5 +1,5 @@
 {
   "singleQuote": true,
-  "endOfLine": "lf",
+  "endOfLine": "auto",
   "semi": false
 }
