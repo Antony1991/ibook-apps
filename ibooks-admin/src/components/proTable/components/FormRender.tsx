@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-25 15:48:22
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-11-25 23:29:23
+ * @LastEditTime: 2022-11-26 14:05:59
  * @FilePath: /ibook-apps/ibooks-admin/src/components/proTable/components/FormRender.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -66,28 +66,25 @@ const FormRender: React.FC<FormRenderProp> = (props) => {
   // 查询form数组
   const fields = useMemo(() => {
     const fors = searchFields?.map((it) => it.for).filter((it) => it)
-    console.log('-----fors', fors)
     const items = searchFields?.map((field: SearchForm) => {
       return (
-        <Col style={{ margin: '0 6px' }} {...field.fieldCol}>
+        <Col key={field.name} style={{ margin: '0 6px' }} {...field.fieldCol}>
           {getFormItem(field)}
         </Col>
       )
     })
     return items
   }, [getFormItem, searchFields])
-  const onFinish = (values: object) => {
-    console.log('------values', values)
+  const onFinish = useCallback((values: object) => {
     fetch(1, values, true)
-  }
-  const onReset = () => {
+  }, [])
+  const onReset = useCallback(() => {
     if (formRef.current) {
       const values: object = formRef.current.getFieldsValue(true)
-      console.log('-------allvalues', values)
       formRef.current.resetFields()
       reset(1, values, true)
     }
-  }
+  }, [])
   return useMemo(() => {
     return (
       <Card

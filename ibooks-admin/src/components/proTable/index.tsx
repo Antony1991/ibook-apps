@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-24 10:39:28
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-11-25 23:41:49
+ * @LastEditTime: 2022-11-28 14:07:12
  * @FilePath: /ibook-apps/ibooks-admin/src/components/proTable/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -26,7 +26,8 @@ const BookProTable = (props: ProTableProps) => {
     toolBarRender,
     defaultPageSize = 10,
     pagination,
-    manualRequest
+    manualRequest,
+    size = 'small',
     ...rest
   } = props
   const formSearch = {}
@@ -44,18 +45,15 @@ const BookProTable = (props: ProTableProps) => {
   })
   useEffect(() => {
     // 是否需要手动触发首次请求
-    if(!manualRequest) {
+    if (!manualRequest) {
       fetchData(paginationParam.current, result.currentValues, false)
     }
   }, [])
-  useEffect(() => {
-
-  }, [])
-  
 
   /** request data */
   const fetchData: any = useCallback(
     async (current: number, values: object, clearPagination: boolean) => {
+      console.log('-----------first')
       setloading(true)
       const response: RequestData<any> = await request({
         current,
@@ -104,12 +102,21 @@ const BookProTable = (props: ProTableProps) => {
     ) {
       pager.current = pagination.current as number
       pager.pageSize = pagination.pageSize as number
-      setpaginationParam(pager)
+      // setpaginationParam(pager)
+      fetchData(pager.current, result.currentValues, false)
     }
   }
+  const initColumns = useMemo(() => {
+    return columns?.map((item) => ({
+      ...item,
+      align: item.align ?? 'center',
+    }))
+  }, [columns])
+  // 表格的基础配置
   const getTableProps = (): TableProps<any> => ({
     ...rest,
-    columns: columns,
+    size,
+    columns: initColumns,
     dataSource: result.dataSource,
     pagination: propsPagination,
     loading,
@@ -140,12 +147,21 @@ const BookProTable = (props: ProTableProps) => {
     }
     return null
   }, [fetchData, loading, onReset, searchFields])
+  const toolBar = useMemo(() => {
+    if (toolBarRender && typeof toolBarRender === 'function') {
+      return <div className={styles.toolBar}>{toolBarRender()}</div>
+    }
+    return null
+  }, [toolBarRender])
   const renderTable = () => {
     return (
-      <Card>
+      <>
         {searchForm}
-        {tableDom}
-      </Card>
+        <Card>
+          {toolBar}
+          {tableDom}
+        </Card>
+      </>
     )
   }
   return <div className={styles.proTable}>{renderTable()}</div>

@@ -1,0 +1,38 @@
+.tagsView {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+  align-items: center;
+  height: 36px;
+  flex: 0 0 36px;
+  font-size: 12px;
+  background: #fff;
+  border-bottom: 1px solid #d8dce5;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%), 0 0 3px 0 rgb(0 0 0 / 4%);
+  li {
+    padding: 0 8px;
+    margin-left: 5px;
+    border: 1px solid #d8dce5;
+    background-color: #fff;
+    white-space: nowrap;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .3s ease;
+    &.active {
+      i {
+        background: #fff;
+        display: inline-flex;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 2px;
+        margin-right: 4px;
+      }
+      background-color: #00b96b;
+      color: #fff;
+    }
+    span {
+      margin-right: 5px;
+    }
+  }
+}

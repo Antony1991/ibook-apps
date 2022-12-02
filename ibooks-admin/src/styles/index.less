@@ -1,0 +1,60 @@
+@import './reset';
+@import './login/index';
+.router-wrapper {
+  overflow: hidden;
+}
+.forward-from-right-enter {
+  z-index: 2;
+  opacity: 0;
+  transform: translateX(60px);
+}
+
+.forward-from-right-enter-active {
+  z-index: 2;
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms;
+}
+
+.forward-from-right-exit {
+  z-index: 1;
+  opacity: 1;
+}
+
+.forward-from-right-exit-active {
+  z-index: 1;
+  opacity: .3;
+  transition: all 500ms;
+}
+
+.back-to-right-enter {
+  z-index: 1;
+  opacity: .3;
+}
+
+.back-to-right-enter-active {
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms;
+}
+
+.back-to-right-exit {
+  z-index: 2;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.back-to-right-exit-active {
+  z-index: 2;
+  opacity: 0;
+  transform: translate(100%);
+  transition: all 500ms;
+}
+.ibook-content {
+  padding: 15px 10px;
+}
+
+.y-full {
+  height: 100%;
+}

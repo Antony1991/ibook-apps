@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-24 12:27:10
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-11-25 23:33:37
+ * @LastEditTime: 2022-11-28 13:47:54
  * @FilePath: /ibook-apps/ibooks-admin/src/components/proTable/typing.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -96,7 +96,8 @@ export type ProTableProps = {
   /**
    * @name 渲染操作栏
    */
-  toolBarRender?: any
+  toolBarRender?: () => React.ReactNode
+
   /**@name 默认defaultPageSize */
   defaultPageSize?: number
 
@@ -110,8 +111,12 @@ export type ProTableProps = {
    * @name 数据加载失败时触发
    */
   onRequestError?: (e: Error) => void
+
   /**@name 查询form */
   searchFields?: SearchForm[] | (() => SearchForm[])
+
+  /**@name 查询和重置 旁边支持新增等额外的按钮 */
+  extraButtons?: () => React.ReactNode
 } & TableProps<any>
 
 export type ParamsType = Record<string, any>
