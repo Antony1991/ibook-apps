@@ -1,3 +1,11 @@
+/*
+ * @Author: Antony vic19910108@gmail.com
+ * @Date: 2022-11-23 16:30:40
+ * @LastEditors: Antony vic19910108@gmail.com
+ * @LastEditTime: 2022-12-03 15:03:36
+ * @FilePath: /ibook-apps/server/app/service/user.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 const { Service } = require('egg');
 const { Op } = require('sequelize');
 
@@ -6,7 +14,7 @@ class UserService extends Service {
     const { ctx } = this;
     return await ctx.model.User.findOne({
       where: { id },
-      attributes: { exclude: ['password', 'deleted_at'] },
+      attributes: { exclude: [ 'password', 'deleted_at' ] },
     });
   }
   // create
@@ -74,7 +82,7 @@ class UserService extends Service {
     username ? where[Op.or].push({ username }) : null;
     return await ctx.model.User.findOne({
       where,
-      attributes: { exclude: ['password'] },
+      attributes: { exclude: [ 'password' ] },
     });
   }
 

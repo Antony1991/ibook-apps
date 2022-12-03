@@ -2,13 +2,25 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-24 10:39:28
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-11-28 14:07:12
+ * @LastEditTime: 2022-12-03 18:53:57
  * @FilePath: /ibook-apps/ibooks-admin/src/components/proTable/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Card, PaginationProps, Table, TableProps } from 'antd'
-import type { ProTableProps, RequestData, SearchFunc } from './typing'
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from 'react'
+import { Card, PaginationProps, Space, Table, TableProps } from 'antd'
+import type {
+  ProTableProps,
+  RequestData,
+  RowAction,
+  SearchFunc,
+} from './typing'
 import styles from './index.module.less'
 import FormRender from './components/FormRender'
 import {
@@ -16,13 +28,14 @@ import {
   SorterResult,
   TableCurrentDataSource,
 } from 'antd/es/table/interface'
+import { ColumnProps } from 'antd/es/table'
 
 // <
 // T extends Record<string, any>,
 // U extends ParamsType,
 // ValueType
 // >
-const BookProTable = (props: ProTableProps) => {
+const BookProTable = forwardRef((props: ProTableProps, ref) => {
   const {
     columns,
     request,
@@ -33,6 +46,7 @@ const BookProTable = (props: ProTableProps) => {
     pagination,
     manualRequest,
     size = 'small',
+    rowActions,
     ...rest
   } = props
   const formSearch = {}
@@ -114,12 +128,80 @@ const BookProTable = (props: ProTableProps) => {
       fetchData(pager.current, result.currentValues, false)
     }
   }
+  // 渲染操作列
+  const actionColumn = useMemo((): ColumnProps<any> | null => {
+    // 判断操作列是否有内容
+    if (rowActions && rowActions.length) {
+      return {
+        key: 'actions',
+        title: '操作',
+        dataIndex: '_actions',
+        render: (_, record) => {
+          // 过滤掉操作列中不显示的操作
+          const showActions: RowAction[] = renderActionsController(
+            rowActions,
+            record
+          )
+          // 渲染操作列的内容，对于禁用的禁用
+          const showActionsTemp = showActions.map((item: RowAction, i) => {
+            const label =
+              typeof item.label === 'function'
+                ? item.label?.(record)
+                : item.label
+            const disabled = item.isDisabled && item.isDisabled(record)
+            const onClick = () => {
+              if (disabled) {
+                return false
+              }
+              if (item.action) {
+                item.action(record)
+              }
+            }
+            return (
+              <a
+                key={i}
+                style={
+                  disabled
+                    ? {
+                        color: 'rgba(0, 0, 0, .25)',
+                        cursor: 'default',
+                      }
+                    : {}
+                }
+                onClick={onClick}
+              >
+                {label}
+              </a>
+            )
+          })
+          return <Space>{showActionsTemp}</Space>
+        },
+      }
+    }
+    return null
+  }, [rowActions])
   const initColumns = useMemo(() => {
-    return columns?.map((item) => ({
-      ...item,
-      align: item.align ?? 'center',
-    }))
-  }, [columns])
+    // 将所有列都设置align为center
+    const proColumns = actionColumn
+      ? [...(columns ?? []), actionColumn]
+      : columns
+    return (
+      proColumns?.map((item) => ({
+        ...item,
+        align: item.align ?? 'center',
+      })) ?? []
+    )
+  }, [actionColumn, columns])
+  const renderActionsController = (actions: RowAction[], record: any) => {
+    return actions.filter((action) => {
+      // 默认不设置为true
+      if (!action.renderController) {
+        return true
+      }
+      return action.renderController(record)
+    })
+  }
+
   // 表格的基础配置
   const getTableProps = (): TableProps<any> => ({
     ...rest,
@@ -172,7 +254,15 @@ const BookProTable = (props: ProTableProps) => {
       </>
     )
   }
+  useImperativeHandle(
+    ref,
+    () => ({
+      fetch: fetchData,
+      reset: onReset,
+    }),
+    [fetchData, onReset]
+  )
   return <div className={styles.proTable}>{renderTable()}</div>
-}
+})
 
 export default BookProTable

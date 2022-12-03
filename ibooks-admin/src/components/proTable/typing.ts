@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-24 12:27:10
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-11-28 13:47:54
+ * @LastEditTime: 2022-12-03 16:50:09
  * @FilePath: /ibook-apps/ibooks-admin/src/components/proTable/typing.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -74,6 +74,16 @@ export type SearchParam = {
   clearPagination: boolean
   values: object
 }
+export type RowAction = {
+  /**@name 控制action是否显示, 默认为true */
+  renderController?: (record: any) => boolean
+  /**@name 文本显示 */
+  label: React.ReactNode | ((record: any) => React.ReactNode)
+  /**@name 是否禁用 */
+  isDisabled?: (record: any) => boolean
+  /**@name 动作回调 */
+  action?: (record: any) => void
+}
 /**
  * ProTable 的类型定义 继承自 antd 的 Table
  */
@@ -117,6 +127,9 @@ export type ProTableProps = {
 
   /**@name 查询和重置 旁边支持新增等额外的按钮 */
   extraButtons?: () => React.ReactNode
+
+  /**@name 操作列 */
+  rowActions?: RowAction[]
 } & TableProps<any>
 
 export type ParamsType = Record<string, any>

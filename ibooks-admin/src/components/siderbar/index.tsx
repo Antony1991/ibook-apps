@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-24 00:31:43
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-02 13:41:45
+ * @LastEditTime: 2022-12-03 21:44:47
  * @FilePath: /ibook-apps/ibooks-admin/src/components/siderbar/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,6 +14,7 @@ import { baseMenus, MenuConfig } from '@/config/base'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTagView, TagItemProp } from '@/redux/features/users/usersSlice'
 import { RootState } from '@/redux/store'
+import { getFlatMenus } from '@/utils'
 
 const { Sider } = Layout
 interface SiderBarProps {
@@ -26,15 +27,29 @@ const SiderBar: React.FC<SiderBarProps> = ({ collapsed }) => {
     (state: RootState) => state.users.tagList
   )
   const getBaseOpenKeys = () => {
-    return `/${navLocation.pathname.split('/')[1]}/${navLocation.pathname.split('/')[2]
-      }`
+    return `/${navLocation.pathname.split('/')[1]}/${
+      navLocation.pathname.split('/')[2]
+    }`
   }
   const [openKeys, setopenKeys] = useState([getBaseOpenKeys()])
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(addTagView({ path: '/app/welcome', name: '首页' }))
+  const flatMenus = useMemo(() => {
+    return getFlatMenus(baseMenus)
   }, [])
+  useEffect(() => {
+    // dispatch(addTagView({ path: '/app/welcome', name: '首页' }))
+    // flatMenus(baseMenus)
+    initTagView()
+  }, [])
+  // 进入页面的tabView
+  const initTagView = () => {
+    const itemMenu = flatMenus.find((item) => item.key === navLocation.pathname)
+    if (itemMenu) {
+      dispatch(addTagView({ path: itemMenu.key, name: itemMenu.label }))
+    } else {
+      dispatch(addTagView({ path: '/app/welcome', name: '首页' }))
+    }
+  }
   const onOpenChange = (keys: string[]) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
     if (
@@ -71,7 +86,13 @@ const SiderBar: React.FC<SiderBarProps> = ({ collapsed }) => {
           ),
         }
       } else {
-        return { ...item, title: item.label }
+        return {
+          ...item,
+          title: item.label,
+          key: item.key.includes('/app')
+            ? item.key
+            : `${baseRouteUrl}${item.key}`,
+        }
       }
     })
   }

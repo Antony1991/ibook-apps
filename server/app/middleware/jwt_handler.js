@@ -1,6 +1,14 @@
+/*
+ * @Author: Antony vic19910108@gmail.com
+ * @Date: 2022-12-03 14:08:10
+ * @LastEditors: Antony vic19910108@gmail.com
+ * @LastEditTime: 2022-12-03 15:05:32
+ * @FilePath: /ibook-apps/server/app/middleware/jwt_handler.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 module.exports = (options, app) => {
   const context = app.createAnonymousContext();
-  return async function (ctx, next) {
+  return async function(ctx, next) {
     try {
       // 如果是非api请求则跳过验证
       if (!/^\/api\//.test(ctx.request.url)) {

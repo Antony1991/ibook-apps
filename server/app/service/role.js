@@ -1,3 +1,11 @@
+/*
+ * @Author: Antony vic19910108@gmail.com
+ * @Date: 2022-12-03 14:08:10
+ * @LastEditors: Antony vic19910108@gmail.com
+ * @LastEditTime: 2022-12-03 19:31:41
+ * @FilePath: /ibook-apps/server/app/service/role.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 const dayjs = require('dayjs');
 const { Service } = require('egg');
 const { Op } = require('sequelize');
@@ -10,6 +18,7 @@ class RoleService extends Service {
       offset,
       limit,
       where,
+      attributes: { exclude: [ 'password', 'deleted_at' ] },
     });
 
   }
@@ -26,9 +35,9 @@ class RoleService extends Service {
         message: '账号已存在',
       };
     }
-    const passwordObj = await ctx.helper.tools.saltPassword(payload.password);
-    payload = { ...payload, ...passwordObj };
-    payload.password += payload.salt;
+    // const passwordObj = await ctx.helper.tools.saltPassword(payload.password);
+    // payload = { ...payload, ...passwordObj };
+    // payload.password += payload.salt;
     ctx.logger.info('创建', payload);
     try {
       const res_role = await ctx.model.Role.create({
@@ -42,6 +51,38 @@ class RoleService extends Service {
     } catch (error) {
       ctx.logger.error('创建', error);
     }
+  }
+  // 更新角色
+  async updateRole(payload) {
+    const { ctx } = this;
+    const { id, roleName, username, password } = payload;
+    const res = await ctx.model.Role.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!res) {
+      return {
+        __code_wrong: 40001,
+        message: '账号不存在',
+      };
+    }
+    const nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    return await ctx.model.Role.update({
+      username,
+      role_name: roleName,
+      password,
+      updated_at: nowTime,
+    }, {
+      where: { id },
+    });
+  }
+  // 删除角色
+  async deleteRole(payload) {
+    const { ctx } = this;
+    return await ctx.model.Role.destroy({
+      where: { id: payload.id },
+    });
   }
 
   // 角色是否存在

@@ -1,3 +1,11 @@
+/*
+ * @Author: Antony vic19910108@gmail.com
+ * @Date: 2022-11-23 16:30:40
+ * @LastEditors: Antony vic19910108@gmail.com
+ * @LastEditTime: 2022-12-03 19:57:12
+ * @FilePath: /ibook-apps/server/app/controller/v1/user.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 const { Controller } = require('egg');
 
 class UserController extends Controller {
