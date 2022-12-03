@@ -15,6 +15,7 @@ import axios, {
   AxiosResponse,
 } from 'axios'
 import type { BaseQueryFn } from '@reduxjs/toolkit/query'
+import { message } from 'antd'
 
 const instance: AxiosInstance = axios.create({
   baseURL: '/api/v1',
@@ -54,7 +55,7 @@ instance.interceptors.response.use(
     return response.data
   },
   (err: AxiosError) => {
-    console.log(err)
+    message.error('服务器繁忙，请稍后重试')
     return Promise.reject(err)
   }
 )

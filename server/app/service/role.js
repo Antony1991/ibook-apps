@@ -16,7 +16,7 @@ class RoleService extends Service {
   // 创建角色
   async createRole(payload) {
     const { ctx } = this;
-    const { username, status, roleName } = payload;
+    const { username, roleName } = payload;
     const nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
     const resExistRoleName = await this.existRoleFields({ username });
     ctx.logger.info('==========', resExistRoleName);
@@ -34,7 +34,6 @@ class RoleService extends Service {
       const res_role = await ctx.model.Role.create({
         username,
         password: payload.password,
-        status,
         role_name: roleName,
         created_at: nowTime,
         updated_at: nowTime,

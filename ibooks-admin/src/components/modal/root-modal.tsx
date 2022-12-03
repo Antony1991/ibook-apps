@@ -11,6 +11,7 @@ import React from 'react'
 
 export interface RootModalProps extends DrawerProps {
   onOk?: () => void
+  loading?: boolean
 }
 
 const RootModal: React.FC<RootModalProps> = (props) => {
@@ -20,6 +21,7 @@ const RootModal: React.FC<RootModalProps> = (props) => {
     maskClosable = false,
     onClose,
     onOk,
+    loading,
     children,
     ...newProps
   } = props
@@ -33,7 +35,7 @@ const RootModal: React.FC<RootModalProps> = (props) => {
       extra={
         <Space>
           <Button onClick={onClose}>取消</Button>
-          <Button type="primary" onClick={onOk}>
+          <Button type="primary" loading={loading} onClick={onOk}>
             提交
           </Button>
         </Space>

@@ -8,21 +8,25 @@
  */
 import Layouts from '@/components/layouts'
 import { baseRouteUrl } from '@/config/routes'
-import DualAxesPage from '@/pages/charts-manager/dualAxes'
-import WaterLiquidPage from '@/pages/charts-manager/water-liquid'
-import WordCloudPage from '@/pages/charts-manager/word-cloud'
-import BackTopPage from '@/pages/component-manager/back-top'
-import CountToPage from '@/pages/component-manager/count-to'
-import RichTextPage from '@/pages/component-manager/rich-text'
-import Error403Page from '@/pages/error-manager/error-403'
-import Error500Page from '@/pages/error-manager/error-500'
-import LoginPage from '@/pages/login/Login'
-import MemberList from '@/pages/member-manager/member-list'
-import NotFoundPage from '@/pages/not-found'
-import RolePrivige from '@/pages/system-manager/role-privige'
-import SystemAccount from '@/pages/system-manager/system-account'
-import WelcomePagee from '@/pages/welcome/Welcome'
 import { createBrowserRouter } from 'react-router-dom'
+import React from 'react'
+import WelcomePagee from '@/pages/welcome/Welcome'
+import LoginPage from '@/pages/login/Login'
+const WaterLiquidPage = React.lazy(() => import('@/pages/charts-manager/water-liquid'))
+const WordCloudPage = React.lazy(() => import('@/pages/charts-manager/word-cloud'))
+const BackTopPage = React.lazy(() => import('@/pages/component-manager/back-top'))
+const CountToPage = React.lazy(() => import('@/pages/component-manager/count-to'))
+const RichTextPage = React.lazy(() => import('@/pages/component-manager/rich-text'))
+const Error403Page = React.lazy(() => import('@/pages/error-manager/error-403'))
+const Error500Page = React.lazy(() => import('@/pages/error-manager/error-500'))
+
+const MemberList = React.lazy(() => import('@/pages/member-manager/member-list'))
+const NotFoundPage = React.lazy(() => import('@/pages/not-found'))
+const RolePrivige = React.lazy(() => import('@/pages/system-manager/role-privige'))
+const SystemAccount = React.lazy(() => import('@/pages/system-manager/system-account'))
+
+const DualAxesPage = React.lazy(() => import('@/pages/charts-manager/dualAxes'))
+
 
 const router = createBrowserRouter([
   {
@@ -37,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: `${baseRouteUrl}/member-manager/member-list`,
-        element: <MemberList />,
+        element: <React.Suspense> <MemberList /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/system-manager/role-privige`,
@@ -45,39 +49,39 @@ const router = createBrowserRouter([
       },
       {
         path: `${baseRouteUrl}/system-manager/system-account`,
-        element: <SystemAccount />,
+        element: <React.Suspense><SystemAccount /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/component-manager/rich-text`,
-        element: <RichTextPage />,
+        element: <React.Suspense><RichTextPage /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/component-manager/back-top`,
-        element: <BackTopPage />,
+        element: <React.Suspense><BackTopPage /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/component-manager/count-to`,
-        element: <CountToPage />,
+        element: <React.Suspense><CountToPage /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/charts-manager/word-cloud`,
-        element: <WordCloudPage />,
+        element: <React.Suspense><WordCloudPage /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/charts-manager/dualAxes`,
-        element: <DualAxesPage />,
+        element: <React.Suspense><DualAxesPage /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/charts-manager/water-liquid`,
-        element: <WaterLiquidPage />,
+        element: <React.Suspense><WaterLiquidPage /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/error-manager/403`,
-        element: <Error403Page />,
+        element: <React.Suspense><Error403Page /></React.Suspense>,
       },
       {
         path: `${baseRouteUrl}/error-manager/500`,
-        element: <Error500Page />,
+        element: <React.Suspense><Error500Page /></React.Suspense>,
       },
     ],
   },

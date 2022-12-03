@@ -11,6 +11,11 @@ import { Card, PaginationProps, Table, TableProps } from 'antd'
 import type { ProTableProps, RequestData, SearchFunc } from './typing'
 import styles from './index.module.less'
 import FormRender from './components/FormRender'
+import {
+  FilterValue,
+  SorterResult,
+  TableCurrentDataSource,
+} from 'antd/es/table/interface'
 
 // <
 // T extends Record<string, any>,
@@ -90,10 +95,15 @@ const BookProTable = (props: ProTableProps) => {
     return pagination
   }, [pagination, paginationParam])
   // 分页，排序change
-  const handleChange = (pagination: PaginationProps, ...rest) => {
+  const handleChange = (
+    pagination: PaginationProps,
+    filters: Record<string, FilterValue | null>,
+    sorter: SorterResult<any> | SorterResult<any>[],
+    extra: TableCurrentDataSource<any>
+  ) => {
     const pager = { ...paginationParam }
     // onChange
-    onChange?.(pagination, ...rest)
+    onChange?.(pagination, filters, sorter, extra)
     if (
       pager.current !== pagination.current ||
       pager.pageSize !== pagination.pageSize

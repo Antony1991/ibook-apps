@@ -37,7 +37,7 @@ export type FieldItemProp = {
   /**@name 是否是必填 */
   required?: boolean
 } & Omit<FormItemProps, 'name' | 'label'>
-export interface FormFieldsProps extends FormProps {
+export interface FormFieldsProps extends Omit<FormProps, 'fields'> {
   fieldList: FieldItemProp[]
 }
 const FormFields: React.FC<FormFieldsProps> = (props) => {

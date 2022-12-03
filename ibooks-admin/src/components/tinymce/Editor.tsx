@@ -33,36 +33,36 @@ const tinymceConfig: IAllProps['init'] = {
   save_onsavecallback: function () {
     console.log('Saved')
   },
-  file_picker_callback: function (callback, value, meta) {
-    //文件分类
-    let filetype =
-      '.pdf, .txt, .zip, .rar, .7z, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .mp3, .mp4'
-    let upurl = '/api/controller/'
-    //为不同插件指定文件类型及后端地址
-    switch (meta.filetype) {
-      case 'image':
-        filetype = '.jpg, .jpeg, .png, .gif'
-        upurl += 'action1'
-        break
-      case 'media':
-        filetype = '.mp3, .mp4'
-        upurl += 'action2'
-        break
-      case 'file':
-        break
-    }
-    //模拟出一个input用于添加本地文件
-    const input = document.createElement('input')
-    input.setAttribute('type', 'file')
-    input.setAttribute('accept', filetype)
-    input.click()
-    input.onchange = function () {
-      const file = this.files[0]
-      let xhr, formData
-      console.log(file.name)
-      //TODO:这里写请求
-    }
-  },
+  // file_picker_callback: function (callback, value, meta) {
+  //   //文件分类
+  //   let filetype =
+  //     '.pdf, .txt, .zip, .rar, .7z, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .mp3, .mp4'
+  //   let upurl = '/api/controller/'
+  //   //为不同插件指定文件类型及后端地址
+  //   switch (meta.filetype) {
+  //     case 'image':
+  //       filetype = '.jpg, .jpeg, .png, .gif'
+  //       upurl += 'action1'
+  //       break
+  //     case 'media':
+  //       filetype = '.mp3, .mp4'
+  //       upurl += 'action2'
+  //       break
+  //     case 'file':
+  //       break
+  //   }
+  //   //模拟出一个input用于添加本地文件
+  //   const input = document.createElement('input')
+  //   input.setAttribute('type', 'file')
+  //   input.setAttribute('accept', filetype)
+  //   input.click()
+  //   input.onchange = function () {
+  //     const file = this.files[0]
+  //     let xhr, formData
+  //     console.log(file.name)
+  //     //TODO:这里写请求
+  //   }
+  // },
 }
 export interface TinymceEditorProps extends Omit<IAllProps, 'onChange'> {
   onChange?: (content: string) => void
