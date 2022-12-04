@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-24 01:15:35
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-02 14:53:08
+ * @LastEditTime: 2022-12-04 16:53:05
  * @FilePath: /ibook-apps/ibooks-admin/src/components/header/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,6 +14,9 @@ import HeaderUser from './header-user'
 import { baseMenus, MenuConfig } from '@/config/base'
 import { baseRouteUrl } from '@/config/routes'
 import { Link, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import { stat } from 'fs'
 
 const { Header } = Layout
 interface IHeadersProps {
@@ -22,6 +25,7 @@ interface IHeadersProps {
 }
 const IHeaders: React.FC<IHeadersProps> = ({ onCollapseChange, collapsed }) => {
   const location = useLocation()
+  const flatMenus = useSelector((state: RootState) => state.users.flatMenus)
   const extraBreadItems = useMemo(() => {
     const pathSnippets = location.pathname
       .split('/')
@@ -29,13 +33,14 @@ const IHeaders: React.FC<IHeadersProps> = ({ onCollapseChange, collapsed }) => {
       .filter((i) => i !== 'app')
     return pathSnippets.map((_, i) => {
       const url = `/${pathSnippets.slice(0, i + 1).join('/')}`
+      const breadItem = flatMenus.find((item) => item.key === `/app${url}`)
       return (
         <Breadcrumb.Item key={url}>
-          <Link to={`/app/${url}`}>{url}</Link>
+          <span>{breadItem?.label}</span>
         </Breadcrumb.Item>
       )
     })
-  }, [location.pathname])
+  }, [flatMenus.length, location.pathname])
   const breadItems = [
     <Breadcrumb.Item key="home">
       <Link to="/">首页</Link>

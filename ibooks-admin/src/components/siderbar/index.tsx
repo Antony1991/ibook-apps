@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-11-24 00:31:43
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-03 21:44:47
+ * @LastEditTime: 2022-12-04 17:09:03
  * @FilePath: /ibook-apps/ibooks-admin/src/components/siderbar/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,9 +12,8 @@ import { baseRouteUrl } from '@/config/routes'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { baseMenus, MenuConfig } from '@/config/base'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTagView, TagItemProp } from '@/redux/features/users/usersSlice'
+import { addTagView } from '@/redux/features/users/usersSlice'
 import { RootState } from '@/redux/store'
-import { getFlatMenus } from '@/utils'
 
 const { Sider } = Layout
 interface SiderBarProps {
@@ -23,9 +22,7 @@ interface SiderBarProps {
 const SiderBar: React.FC<SiderBarProps> = ({ collapsed }) => {
   const navigate = useNavigate()
   const navLocation = useLocation()
-  const tagList: TagItemProp[] = useSelector(
-    (state: RootState) => state.users.tagList
-  )
+  const { tagList, flatMenus } = useSelector((state: RootState) => state.users)
   const getBaseOpenKeys = () => {
     return `/${navLocation.pathname.split('/')[1]}/${
       navLocation.pathname.split('/')[2]
@@ -33,14 +30,9 @@ const SiderBar: React.FC<SiderBarProps> = ({ collapsed }) => {
   }
   const [openKeys, setopenKeys] = useState([getBaseOpenKeys()])
   const dispatch = useDispatch()
-  const flatMenus = useMemo(() => {
-    return getFlatMenus(baseMenus)
-  }, [])
   useEffect(() => {
-    // dispatch(addTagView({ path: '/app/welcome', name: '首页' }))
-    // flatMenus(baseMenus)
     initTagView()
-  }, [])
+  }, [flatMenus.length])
   // 进入页面的tabView
   const initTagView = () => {
     const itemMenu = flatMenus.find((item) => item.key === navLocation.pathname)
@@ -68,7 +60,7 @@ const SiderBar: React.FC<SiderBarProps> = ({ collapsed }) => {
         dispatch(addTagView({ name: item.props.title, path: key }))
       }
     },
-    [navigate]
+    [navigate, tagList.length]
   )
   const loopMenu: any = (menus: MenuConfig[]) => {
     return menus.map((item: MenuConfig) => {
@@ -97,14 +89,12 @@ const SiderBar: React.FC<SiderBarProps> = ({ collapsed }) => {
     })
   }
   const items = useMemo(() => {
-    console.log(loopMenu(baseMenus))
     return loopMenu(baseMenus)
   }, [])
   const selectedKeys = useMemo(() => {
     return navLocation.pathname
   }, [navLocation.pathname])
   const defaultOpenKeys = useMemo(() => {
-    console.log('-----open', navLocation.pathname.split('/').slice(1, 3))
     return navLocation.pathname.substring(
       0,
       navLocation.pathname.lastIndexOf('/')

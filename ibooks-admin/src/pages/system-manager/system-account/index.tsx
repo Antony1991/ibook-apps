@@ -1,6 +1,5 @@
 import BookProTable from '@/components/proTable'
 import {
-  ProTableProps,
   RowAction,
   SearchForm,
   SearchParam,
@@ -143,7 +142,7 @@ const SystemAccount = () => {
         },
       },
       {
-        label: <a className="text-danger">删除</a>,
+        label: <span className="text-danger">删除</span>,
         action: (record: any) => {
           confirmModal({
             title: '删除角色账号',
