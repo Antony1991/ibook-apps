@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-05 10:12:10
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-05 18:26:37
+ * @LastEditTime: 2022-12-06 17:22:21
  * @FilePath: /ibook-apps/ibooks_app/lib/pages/auth/register_page.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -49,7 +49,6 @@ class _RegisterPageeState extends State<RegisterPage> with RegisterPageBLoc {
                   padding: const EdgeInsets.only(bottom: 20),
                   child: AuthTextField(
                     controller: userController,
-                    prefixIcon: Icons.account_circle,
                     hintText: '用户名',
                     validator: userValidator,
                   ),
@@ -58,7 +57,6 @@ class _RegisterPageeState extends State<RegisterPage> with RegisterPageBLoc {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: AuthTextField(
                       controller: pwdController,
-                      prefixIcon: Icons.lock_rounded,
                       hintText: '密码',
                       validator: pwdValidator,
                     )),
@@ -66,7 +64,6 @@ class _RegisterPageeState extends State<RegisterPage> with RegisterPageBLoc {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: AuthTextField(
                       controller: confirmPwdController,
-                      prefixIcon: Icons.lock_rounded,
                       hintText: '确认密码',
                       validator: confirmPwdValidator,
                     )),

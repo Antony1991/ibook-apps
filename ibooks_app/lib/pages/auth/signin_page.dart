@@ -2,12 +2,12 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-05 10:11:59
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-05 18:26:57
+ * @LastEditTime: 2022-12-06 19:31:34
  * @FilePath: /ibook-apps/ibooks_app/lib/pages/auth/signin_page.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import 'package:flutter/material.dart';
-import 'package:ibooks_app/routes/auth_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibooks_app/routes/home_router.dart';
 import 'package:ibooks_app/routes/routes_util.dart';
 import 'package:ibooks_app/styles/icons.dart';
@@ -25,66 +25,203 @@ class SigninPage extends StatefulWidget {
 class _SigninPageState extends State<SigninPage> with SigninBLoc {
   // 主内容区域
   Widget _buildContent() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(6)),
-          color: Color.fromRGBO(216, 216, 216, 0.4)),
-      child: _buildForm(),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildHeader(),
+        _buildTabs(),
+        selectTabIndex == 0 ? _buildSignForm() : _buildRegistForm()
+      ],
     );
   }
 
-  /// 忘记密码
-  Widget _buildForgetPwd() {
+  /// 渲染登录form
+  Widget _buildSignForm() {
+    return Container(
+      padding: const EdgeInsets.only(left: 55, right: 55, top: 50).r,
+      child: Form(
+          child: Column(
+        children: [
+          AuthTextField(
+              prefixIcon: IbookIcons.authUserIc,
+              hintText: '用户名',
+              onChanged: usernameChange),
+          20.verticalSpace,
+          AuthTextField(
+              prefixIcon: IbookIcons.authLockIc,
+              hintText: '密码',
+              onChanged: passwordChange),
+          20.verticalSpace,
+          const AuthTextField(
+            prefixIcon: IbookIcons.authRandomIc,
+            hintText: '验证码',
+          ),
+          20.verticalSpace,
+          AuthButton(
+            '登录',
+            onTap: () {},
+            disabled: (username == null || username!.isEmpty) ||
+                (password == null || password!.isEmpty),
+          ),
+          40.verticalSpace,
+          SizedBox(
+            height: 36.h,
+            child: _buildOtherAction(),
+          )
+        ],
+      )),
+    );
+  }
+
+  /// 渲染注册form
+  Widget _buildRegistForm() {
+    return Container(
+      padding: const EdgeInsets.only(left: 55, right: 55, top: 50).r,
+      child: Form(
+          child: Column(
+        children: [
+          AuthTextField(
+              prefixIcon: IbookIcons.authUserIc,
+              hintText: '用户名',
+              onChanged: usernameChange),
+          20.verticalSpace,
+          AuthTextField(
+              prefixIcon: IbookIcons.authLockIc,
+              hintText: '密码',
+              onChanged: passwordChange),
+          20.verticalSpace,
+          AuthTextField(
+              prefixIcon: IbookIcons.authLockIc,
+              hintText: '确认密码',
+              onChanged: passwordChange),
+          20.verticalSpace,
+          const AuthTextField(
+            prefixIcon: IbookIcons.authRandomIc,
+            hintText: '验证码',
+          ),
+          20.verticalSpace,
+          AuthButton(
+            '注册',
+            onTap: () {},
+            disabled: (username == null || username!.isEmpty) ||
+                (password == null || password!.isEmpty),
+          ),
+          40.verticalSpace,
+          SizedBox(
+            height: 36.h,
+            child: _buildOtherAction(),
+          )
+        ],
+      )),
+    );
+  }
+
+  /// 渲染先去逛逛，在线客服
+  Widget _buildOtherAction() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextButton(
-            onPressed: () => goToRouteName(AuthRouter.register),
-            child: const Text(
-              '还没注册？',
-              style: TextStyle(color: IbookTheme.whiteColor01),
-            )),
-        TextButton(
-            onPressed: () => goToRouteName(AuthRouter.register),
-            child: const Text('忘记密码？',
-                style: TextStyle(color: IbookTheme.whiteColor01)))
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20).r,
+          decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.all(Radius.circular(30.r))),
+          alignment: Alignment.center,
+          child: TextButton(
+              onPressed: () {
+                RoutesUtil.pushNamed(context, HomeRouter.home);
+              },
+              child: Text(
+                '先去逛逛',
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor, fontSize: 14.sp),
+              )),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20).r,
+          decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.all(Radius.circular(30.r))),
+          alignment: Alignment.center,
+          child: TextButton(
+              onPressed: () {},
+              child: Text(
+                '在线客服',
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor, fontSize: 14.sp),
+              )),
+        ),
       ],
     );
   }
 
-  // form
-  Widget _buildForm() {
-    return Column(
-      children: [
-        const Text('登录', style: TextStyle(fontSize: 20, color: Colors.white)),
-        const SizedBox(height: 50),
-        AuthTextField(
-            hintText: '用户名',
-            prefixIcon: Icons.account_circle,
-            onChanged: usernameChange),
-        const SizedBox(height: 30),
-        AuthTextField(
-            obscureText: true,
-            hintText: '密码',
-            prefixIcon: Icons.lock,
-            onChanged: passwordChange),
-        _buildForgetPwd(),
-        const SizedBox(height: 30),
-        AuthButton(
-          '登录',
-          onTap: () {},
-          disabled: (username == null || username!.isEmpty) ||
-              (password == null || password!.isEmpty),
-        ),
-        TextButton(
-            onPressed: () {
-              RoutesUtil.pushNamed(context, HomeRouter.home);
-            },
-            child: const Text('先去逛逛',
-                style: TextStyle(color: IbookTheme.whiteColor01)))
-      ],
+  /// 渲染tabs
+  Widget _buildTabs() {
+    return Container(
+      // padding: EdgeInsets.symmetric(horizontal: 3.sp, vertical: 1.sp),s
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fill, image: AssetImage(IbookIcons.authOutline))),
+      width: 265.w,
+      height: 40.h,
+      child: Stack(
+        children: [
+          AnimatedPositioned(
+              duration: const Duration(milliseconds: 200),
+              left: selectTabIndex == 0 ? 0 : 132.5.w,
+              top: 0,
+              bottom: 0,
+              width: 132.5.w,
+              curve: Curves.fastOutSlowIn,
+              child: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: AssetImage(IbookIcons.authTabBg))),
+              )),
+          Row(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Center(
+                      child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              changeTab(0);
+                            });
+                          },
+                          child: Text('登录',
+                              style: TextStyle(
+                                  color: IbookTheme.whiteColor,
+                                  fontSize: 16.sp))))),
+              Expanded(
+                flex: 1,
+                child: Center(
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            changeTab(1);
+                          });
+                        },
+                        child: Text('注册',
+                            style: TextStyle(
+                                color: IbookTheme.whiteColor,
+                                fontSize: 16.sp)))),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 头部
+  Widget _buildHeader() {
+    return Container(
+      margin: EdgeInsets.only(top: 50.sp, bottom: 30.sp),
+      child: Text('IBOOK APP',
+          style: TextStyle(
+              color: Theme.of(context).primaryColor, fontSize: 30.sp)),
     );
   }
 
@@ -94,19 +231,15 @@ class _SigninPageState extends State<SigninPage> with SigninBLoc {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
-        alignment: Alignment.center,
         decoration: const BoxDecoration(
-            color: Colors.black,
+            color: Color.fromRGBO(14, 20, 56, 1),
             image: DecorationImage(
                 fit: BoxFit.fill,
-                opacity: .7,
                 image: AssetImage(
                   IbookIcons.authBg,
                 ))),
         child: SingleChildScrollView(
-          child: Center(
-            child: _buildContent(),
-          ),
+          child: _buildContent(),
         ),
       ),
     );
@@ -118,12 +251,20 @@ mixin SigninBLoc on State<SigninPage> {
   late TextEditingController pwdController;
   String? username;
   String? password;
+  int selectTabIndex = 0;
 
   @override
   void initState() {
     userController = TextEditingController();
     pwdController = TextEditingController();
     super.initState();
+  }
+
+  // 切换tab
+  void changeTab(int idx) {
+    setState(() {
+      selectTabIndex = idx;
+    });
   }
 
   /// username change
