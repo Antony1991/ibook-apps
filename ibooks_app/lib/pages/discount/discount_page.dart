@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-06 19:50:43
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-07 16:35:53
+ * @LastEditTime: 2022-12-08 20:22:59
  * @FilePath: /ibook-apps/ibooks_app/lib/pages/discount/discount_page.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -22,7 +22,7 @@ class DiscountPage extends StatefulWidget {
 }
 
 class _DiscountPageState extends State<DiscountPage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController tabController;
   int tabIndex = 0;
   @override
@@ -83,6 +83,7 @@ class _DiscountPageState extends State<DiscountPage>
       tabs: const [Tab(text: '全部'), Tab(text: '热门活动')]);
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         body: NestedScrollView(
       headerSliverBuilder: ((context, innerBoxIsScrolled) {
@@ -105,4 +106,8 @@ class _DiscountPageState extends State<DiscountPage>
       ),
     ));
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

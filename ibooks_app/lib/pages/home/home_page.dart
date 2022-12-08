@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-05 18:38:39
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-07 15:01:53
+ * @LastEditTime: 2022-12-08 20:21:10
  * @FilePath: /ibook-apps/ibooks_app/lib/pages/home/home_page.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -31,7 +31,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   final controller = MarqueerController(); // 渲染header
   Widget _buildHeader() {
     return Container(
@@ -234,6 +235,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       // appBar: AppBar(
       //   elevation: 0,
@@ -252,4 +254,8 @@ class _HomePageState extends State<HomePage> {
       )),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

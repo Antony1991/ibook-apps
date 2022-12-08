@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-04 22:36:43
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-07 16:12:24
+ * @LastEditTime: 2022-12-08 22:26:35
  * @FilePath: /ibook-apps/ibooks_app/lib/styles/icons.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -46,4 +46,46 @@ class IbookIcons {
   static const authBtnBg = 'assets/image/auth/auth_btn_bg.png';
   static const authTabBg = 'assets/image/auth/auth_tab_bg.png';
   static const authOutline = 'assets/image/auth/auth_outline.png';
+
+  /// 我的
+  static const profileNotice = 'assets/image/profile/profile_service.png';
+  static const profileVip0 = 'assets/image/profile/profile_vip_0.png';
+  static const profileVip1 = 'assets/image/profile/profile_vip_1.png';
+  static const profileDefProgress =
+      'assets/image/profile/profile_default_progress.png';
+  static const profileGradeCheckbg =
+      'assets/image/profile/profile_check_bg.png';
+  static const profileGradeWrongbg =
+      'assets/image/profile/profile_wrong_bg.png';
+  static const profileUsdtBanner = 'assets/image/profile/profile_usdt_bg.webp';
+  static const profileBanner1 = 'assets/image/profile/profile_banner1.png';
+  static const profileTitleBar = 'assets/image/profile/profile_bar.png';
+
+  /// 我的功能
+  static const profile_bet_ic = 'assets/image/profile/profile_bet_ic.png';
+  static const profile_record_ic = 'assets/image/profile/profile_record_ic.png';
+  static const profile_share_ic = 'assets/image/profile/profile_share_ic.png';
+  static const profile_welfare_ic =
+      'assets/image/profile/profile_welfare_ic.png';
+  static const profile_feedback_ic =
+      'assets/image/profile/profile_feedback_ic.png';
+  static const profile_userinfo_ic =
+      'assets/image/profile/profile_userinfo_ic.png';
+  static const profile_join_ic = 'assets/image/profile/profile_join_ic.png';
+  static const profile_about_ic = 'assets/image/profile/profile_about_ic.png';
+  static const profile_compre_ic = 'assets/image/profile/profile_compre_ic.png';
+  static const profile_sport_ic = 'assets/image/profile/profile_sport_ic.png';
+  static const profile_redwall_ic =
+      'assets/image/profile/profile_redwall_ic.png';
+  static const profile_live_ic = 'assets/image/profile/profile_live_ic.png';
+  static const profile_setting_ic =
+      'assets/image/profile/profile_setting_ic.png';
+
+  /// 全局的
+  static const globalService = 'assets/image/custom_service.png';
+
+  /// 存款
+  static const depositTabbg = 'assets/image/deposit/deposit_tab_bg.png';
+  static const depositActiveTabbg =
+      'assets/image/deposit/deposit_active_tab_bg.png';
 }

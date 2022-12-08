@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-05 18:41:10
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-07 20:53:13
+ * @LastEditTime: 2022-12-08 20:23:29
  * @FilePath: /ibook-apps/ibooks_app/lib/pages/promo/promo_page.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -22,9 +22,11 @@ class SponsorPage extends StatefulWidget {
   State<SponsorPage> createState() => _SponsorPageState();
 }
 
-class _SponsorPageState extends State<SponsorPage> {
+class _SponsorPageState extends State<SponsorPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: IbookTheme.whiteColorAppbar,
@@ -53,4 +55,8 @@ class _SponsorPageState extends State<SponsorPage> {
           })),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

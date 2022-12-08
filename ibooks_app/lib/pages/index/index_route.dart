@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-04 22:28:44
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-06 21:47:23
+ * @LastEditTime: 2022-12-08 20:20:30
  * @FilePath: /ibook-apps/ibooks_app/lib/pages/index/index_route.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -24,10 +24,10 @@ class IndexRoute extends StatefulWidget {
   State<IndexRoute> createState() => _IndexRouteState();
 }
 
-class _IndexRouteState extends State<IndexRoute>
-    with AutomaticKeepAliveClientMixin {
+class _IndexRouteState extends State<IndexRoute> {
   double iconSize = 30.sp;
   int tabIdex = 0;
+  final PageController _pageController = PageController();
 
   Widget _buildBarItemIcon(int currentIndex, String? icon, String? activeIcon) {
     if (currentIndex == tabIdex) {
@@ -69,6 +69,10 @@ class _IndexRouteState extends State<IndexRoute>
                 )),
           ),
           onTap: () {
+            // _pageController.animateToPage(currentIdx,
+            //     duration: const Duration(milliseconds: 400),
+            //     curve: Curves.easeInOutQuart);
+            _pageController.jumpToPage(currentIdx);
             setState(() {
               tabIdex = currentIdx;
             });
@@ -97,10 +101,15 @@ class _IndexRouteState extends State<IndexRoute>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
-      body: IndexedStack(
-        index: tabIdex,
+      body: PageView(
+        physics: const ClampingScrollPhysics(),
+        controller: _pageController,
+        onPageChanged: (value) {
+          setState(() {
+            tabIdex = value;
+          });
+        },
         children: const [
           HomePage(),
           DiscountPage(),
@@ -114,6 +123,7 @@ class _IndexRouteState extends State<IndexRoute>
       // 悬浮按钮
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          _pageController.jumpToPage(0);
           setState(() {
             tabIdex = 0;
           });
@@ -149,7 +159,4 @@ class _IndexRouteState extends State<IndexRoute>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
