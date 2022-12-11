@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-05 18:41:10
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-08 20:23:29
+ * @LastEditTime: 2022-12-09 13:41:47
  * @FilePath: /ibook-apps/ibooks_app/lib/pages/promo/promo_page.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -13,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibooks_app/provider/sponsor_provider.dart';
 import 'package:ibooks_app/styles/icons.dart';
 import 'package:ibooks_app/styles/theme.dart';
+import 'package:ibooks_app/widgets/Spin.dart';
 import 'package:provider/provider.dart';
 
 class SponsorPage extends StatefulWidget {
@@ -33,20 +34,39 @@ class _SponsorPageState extends State<SponsorPage>
         title: const Text('赞助专题'),
       ),
       body: EasyRefresh(
-          onRefresh: () {
+          refreshOnStartHeader: BuilderHeader(
+              builder: (ctx, state) {
+                print("cstate${state.mode}");
+                if (state.mode == IndicatorMode.inactive ||
+                    state.mode == IndicatorMode.done) {
+                  return const SizedBox();
+                }
+                return Container(
+                  width: double.infinity,
+                  height: state.viewportDimension,
+                  alignment: Alignment.center,
+                  child: const Spin(),
+                );
+              },
+              triggerOffset: 70,
+              clamping: true,
+              position: IndicatorPosition.above),
+          onRefresh: () async {
+            await Future.delayed(const Duration(seconds: 2));
             Provider.of<SponsorProvider>(context, listen: false)
                 .initSponsorList();
           },
           refreshOnStart: true,
           child: Consumer<SponsorProvider>(builder: (context, value, child) {
             return ListView.builder(
+                padding: EdgeInsets.only(top: 10.r),
                 itemCount: value.sponsorList.length,
                 itemBuilder: (context, index) {
                   final item = value.sponsorList[index];
-                  return Container(
+                  return SizedBox(
                     height: 150.h,
-                    margin: EdgeInsets.only(top: 10.r),
                     child: FadeInImage(
+                        fit: BoxFit.fill,
                         placeholder:
                             const AssetImage(IbookIcons.disPlaceholder),
                         image: NetworkImage(item.cover_img_day)),

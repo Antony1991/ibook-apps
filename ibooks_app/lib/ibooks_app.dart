@@ -2,12 +2,13 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-04 22:14:30
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-08 10:45:39
+ * @LastEditTime: 2022-12-09 16:15:30
  * @FilePath: /ibook-apps/ibooks_app/lib/ibooks_app.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibooks_app/provider/deposit_provider.dart';
 import 'package:ibooks_app/provider/discount_provider.dart';
 import 'package:ibooks_app/provider/sponsor_provider.dart';
 import 'package:ibooks_app/provider/user_provider.dart';
@@ -30,7 +31,8 @@ class _IbooksAppState extends State<IbooksApp> {
         providers: [
           ChangeNotifierProvider(create: (context) => DiscountProvider()),
           ChangeNotifierProvider(create: (context) => SponsorProvider()),
-          ChangeNotifierProvider(create: (context) => UserProvider())
+          ChangeNotifierProvider(create: (context) => UserProvider()),
+          ChangeNotifierProvider(create: (context) => DepositProvider())
         ],
         child: ScreenUtilInit(
           designSize: const Size(375, 667),

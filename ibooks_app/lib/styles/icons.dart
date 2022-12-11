@@ -2,7 +2,7 @@
  * @Author: Antony vic19910108@gmail.com
  * @Date: 2022-12-04 22:36:43
  * @LastEditors: Antony vic19910108@gmail.com
- * @LastEditTime: 2022-12-08 22:26:35
+ * @LastEditTime: 2022-12-09 15:03:51
  * @FilePath: /ibook-apps/ibooks_app/lib/styles/icons.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -83,9 +83,14 @@ class IbookIcons {
 
   /// 全局的
   static const globalService = 'assets/image/custom_service.png';
+  static const globalSpin = 'assets/image/spin.png';
 
   /// 存款
   static const depositTabbg = 'assets/image/deposit/deposit_tab_bg.png';
   static const depositActiveTabbg =
       'assets/image/deposit/deposit_active_tab_bg.png';
+  static const depositNotice = 'assets/image/deposit/deposit_notice.png';
+  static const depositCommend = 'assets/image/deposit/deposit_commend.png';
+  static const depositQkMoneyBg =
+      'assets/image/deposit/deposit_qk_money_bg.png';
 }

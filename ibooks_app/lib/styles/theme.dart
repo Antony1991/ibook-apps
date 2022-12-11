@@ -20,4 +20,6 @@ class IbookTheme {
   static const whiteColorAppbar = Color.fromRGBO(245, 245, 249, 1);
 
   static const grayColor = Color.fromRGBO(123, 132, 143, 1);
+
+  static const orangeColor = Color.fromRGBO(253, 106, 80, 1);
 }

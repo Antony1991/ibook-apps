@@ -21,6 +21,7 @@ class IbookBoxShadow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: padding ?? const EdgeInsets.all(0),
       margin: margin ?? const EdgeInsets.all(0),
       decoration: BoxDecoration(
