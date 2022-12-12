@@ -10,17 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:ibooks_app/pages/deposit/deposit_page.dart';
 import 'package:ibooks_app/pages/discount/discount_detail_page.dart';
 import 'package:ibooks_app/pages/index/index_route.dart';
+import 'package:ibooks_app/pages/withdrawal/withdrawal_page.dart';
 
 class HomeRouter {
   /// 首页
   static String home = '/';
   static String discountDetail = '/discount/detail';
   static String deposit = '/deposit';
+  static String withdrawal = '/withdrawal';
   static Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     return {
       home: (context) => const IndexRoute(),
       discountDetail: (context) => const DiscountDetailPage(),
-      deposit: (context) => const DepositPage()
+      deposit: (context) => const DepositPage(),
+      withdrawal: (context) => const WithdrawalPage()
     };
   }
 }

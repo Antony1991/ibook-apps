@@ -25,9 +25,10 @@ class TabButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         width: 160.w,
-        height: 36.h,
+        padding: const EdgeInsets.only(top: 7, bottom: 12).r,
         decoration: BoxDecoration(
             image: DecorationImage(
+                fit: BoxFit.fill,
                 image: AssetImage(isActive
                     ? IbookIcons.depositActiveTabbg
                     : IbookIcons.depositTabbg))),

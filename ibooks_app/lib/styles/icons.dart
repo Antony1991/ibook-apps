@@ -6,6 +6,7 @@
  * @FilePath: /ibook-apps/ibooks_app/lib/styles/icons.dart
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
+
 class IbookIcons {
   /// tab iconn
 
@@ -93,4 +94,12 @@ class IbookIcons {
   static const depositCommend = 'assets/image/deposit/deposit_commend.png';
   static const depositQkMoneyBg =
       'assets/image/deposit/deposit_qk_money_bg.png';
+  static const depositUsdtBanner =
+      'assets/image/deposit/deposit_usdt_banner1.png';
+
+  /// 取款
+  static const withdrawalCenterWallet =
+      'assets/image/withdrawal_center_wallet.png';
+  static const withdrawalLockWallet = 'assets/image/withdrawal_lock_wallet.png';
+  static const withdrawalRecycle = 'assets/image/withdrawal_recycle.png';
 }

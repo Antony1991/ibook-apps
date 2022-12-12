@@ -81,6 +81,8 @@ class _UserWalletState extends State<UserWallet> {
       onTap: () {
         if (label == '存款') {
           RoutesUtil.pushNamed(context, HomeRouter.deposit);
+        } else if (label == '取款') {
+          RoutesUtil.pushNamed(context, HomeRouter.withdrawal);
         }
       },
       child: Padding(

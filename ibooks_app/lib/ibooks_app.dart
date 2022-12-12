@@ -44,10 +44,10 @@ class _IbooksAppState extends State<IbooksApp> {
             theme: ThemeData(
                 primaryColor: IbookTheme.primaryColor,
                 colorScheme: const ColorScheme.light().copyWith(
-                    primary: IbookTheme.primaryColor,
-                    secondary: IbookTheme.primaryColor,
-                    onPrimary: IbookTheme.defaultTextColor,
-                    onSecondary: Colors.white)),
+                  primary: IbookTheme.primaryColor,
+                  secondary: IbookTheme.primaryColor,
+                  onPrimary: IbookTheme.defaultTextColor,
+                )),
           ),
         ));
   }

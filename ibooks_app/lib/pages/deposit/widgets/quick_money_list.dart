@@ -11,11 +11,12 @@ class QuickMoneyList extends StatelessWidget {
     List<String> items = list ?? ['1256', '2959', '5351', '7356', '7979'];
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: items
             .map((e) => Container(
                   width: 60.w,
                   height: 28.h,
+                  margin: EdgeInsets.only(right: 7.r),
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                       image: DecorationImage(
