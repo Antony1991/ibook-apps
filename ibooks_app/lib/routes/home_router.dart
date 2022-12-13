@@ -7,9 +7,15 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import 'package:flutter/material.dart';
+import 'package:ibooks_app/pages/banks/bind_bank_page.dart';
+import 'package:ibooks_app/pages/betting/betting_record_page.dart';
 import 'package:ibooks_app/pages/deposit/deposit_page.dart';
 import 'package:ibooks_app/pages/discount/discount_detail_page.dart';
+import 'package:ibooks_app/pages/feedback/feedback_page.dart';
 import 'package:ibooks_app/pages/index/index_route.dart';
+import 'package:ibooks_app/pages/profile/profile_userinfo_page.dart';
+import 'package:ibooks_app/pages/setting/setting_page.dart';
+import 'package:ibooks_app/pages/setting/setting_password_page.dart';
 import 'package:ibooks_app/pages/withdrawal/withdrawal_page.dart';
 
 class HomeRouter {
@@ -18,12 +24,24 @@ class HomeRouter {
   static String discountDetail = '/discount/detail';
   static String deposit = '/deposit';
   static String withdrawal = '/withdrawal';
+  static String bindBank = '/withdrawal/bind-bank';
+  static String bettingRecord = '/profile/bettingRecord';
+  static String setting = '/profile/setting';
+  static String settingPassword = '/profile/setting/password';
+  static String feedBack = '/profile/feedback';
+  static String profileUserInfo = '/profile/userinfo';
   static Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     return {
       home: (context) => const IndexRoute(),
       discountDetail: (context) => const DiscountDetailPage(),
       deposit: (context) => const DepositPage(),
-      withdrawal: (context) => const WithdrawalPage()
+      withdrawal: (context) => const WithdrawalPage(),
+      bindBank: (context) => const BindBankPage(),
+      bettingRecord: (context) => const BettingRecordPage(),
+      setting: (context) => const SettingPage(),
+      settingPassword: (context) => const SettingPasswordPage(),
+      feedBack: (context) => const FeedbackPage(),
+      profileUserInfo: (context) => const ProfileUserInfoPage()
     };
   }
 }

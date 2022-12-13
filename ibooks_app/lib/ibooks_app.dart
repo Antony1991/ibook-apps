@@ -12,6 +12,7 @@ import 'package:ibooks_app/provider/deposit_provider.dart';
 import 'package:ibooks_app/provider/discount_provider.dart';
 import 'package:ibooks_app/provider/sponsor_provider.dart';
 import 'package:ibooks_app/provider/user_provider.dart';
+import 'package:ibooks_app/provider/withdrawal_provider.dart';
 import 'package:ibooks_app/routes/auth_router.dart';
 import 'package:ibooks_app/routes/home_router.dart';
 import 'package:ibooks_app/styles/theme.dart';
@@ -32,7 +33,8 @@ class _IbooksAppState extends State<IbooksApp> {
           ChangeNotifierProvider(create: (context) => DiscountProvider()),
           ChangeNotifierProvider(create: (context) => SponsorProvider()),
           ChangeNotifierProvider(create: (context) => UserProvider()),
-          ChangeNotifierProvider(create: (context) => DepositProvider())
+          ChangeNotifierProvider(create: (context) => DepositProvider()),
+          ChangeNotifierProvider(create: (context) => WithdrawalProvider())
         ],
         child: ScreenUtilInit(
           designSize: const Size(375, 667),

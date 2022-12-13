@@ -1,10 +1,16 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibooks_app/model/WithdrawalVenueModal.dart';
+import 'package:ibooks_app/provider/withdrawal_provider.dart';
+import 'package:ibooks_app/routes/home_router.dart';
+import 'package:ibooks_app/routes/routes_util.dart';
 import 'package:ibooks_app/styles/icons.dart';
 import 'package:ibooks_app/styles/theme.dart';
+import 'package:ibooks_app/widgets/Spin.dart';
 import 'package:ibooks_app/widgets/layout/Ibook_box_shadow.dart';
 import 'package:marqueer/marqueer.dart';
+import 'package:provider/provider.dart';
 
 class WithdrawalPage extends StatefulWidget {
   const WithdrawalPage({super.key});
@@ -17,41 +23,126 @@ class _WithdrawalPageState extends State<WithdrawalPage>
     with SingleTickerProviderStateMixin {
   late CurvedAnimation animation;
   late AnimationController controller;
-
+  var _mFuture;
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
+        vsync: this, duration: const Duration(milliseconds: 300));
 
     Animation<double> linearAnimation =
-        Tween<double>(begin: 0, end: 1).animate(controller);
+        Tween<double>(begin: 0.25, end: 1).animate(controller);
 
     animation =
-        CurvedAnimation(parent: linearAnimation, curve: Curves.fastOutSlowIn)
+        CurvedAnimation(parent: linearAnimation, curve: Curves.easeInOut)
           ..addListener(() {
             setState(() {});
           });
+    _mFuture = _initVenues();
     // controller.forward();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: Container(
-        margin: EdgeInsets.only(top: 10.r),
-        child: EasyRefresh(
-            onRefresh: () {},
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 10.r),
-              children: [_buildNotice(), _buildVenuesContent()],
-            )),
+      body: FutureBuilder(
+          future: _mFuture,
+          builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Container(
+                margin: EdgeInsets.only(top: 10.r),
+                child: EasyRefresh(
+                    onRefresh: () {},
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(horizontal: 10.r),
+                      children: [
+                        _buildNotice(),
+                        _buildVenuesContent(),
+                        30.verticalSpace,
+                        _buildBtn(),
+                        10.verticalSpace,
+                        _buildBankContent()
+                      ],
+                    )),
+              );
+            }
+            return const Center(
+              child: Spin(),
+            );
+          })),
+    );
+  }
+
+  /// bank-content
+  Widget _buildBankContent() {
+    return IbookBoxShadow(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 40).r,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              RoutesUtil.pushNamed(context, HomeRouter.bindBank);
+            },
+            child: Image.asset(IbookIcons.withdrawalAddBank,
+                width: 56.w, height: 56.w),
+          ),
+          2.verticalSpace,
+          Text('绑定银行卡',
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor, fontSize: 14)),
+          Text('(最多可绑定10张银行卡)',
+              style: TextStyle(fontSize: 12.sp, color: IbookTheme.grayColor1))
+        ],
       ),
     );
   }
 
-  /// 渲染场馆内容
+  /// withdrawal按钮
+  Widget _buildBtn() {
+    return InkWell(
+      child: Container(
+        height: 32.h,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(21.r),
+            gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromRGBO(250, 227, 218, 1),
+                  Color.fromRGBO(213, 138, 113, 1)
+                ]),
+            boxShadow: const [
+              BoxShadow(
+                  offset: Offset(0, -1),
+                  blurRadius: 3,
+                  color: Color.fromRGBO(245, 205, 192, 1),
+                  blurStyle: BlurStyle.inner)
+            ]),
+        child: Text('极速取款',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12.sp,
+                color: IbookTheme.whiteColor)),
+      ),
+    );
+  }
+
+  /// venues
+  Future _initVenues() async {
+    print('更新');
+    await Future.delayed(const Duration(milliseconds: 600));
+    Provider.of<WithdrawalProvider>(context, listen: false).initVenueList();
+  }
+
+  /// venue content
   Widget _buildVenuesContent() {
     return IbookBoxShadow(
         margin: EdgeInsets.only(top: 10.r),
@@ -68,6 +159,7 @@ class _WithdrawalPageState extends State<WithdrawalPage>
                 _buildWalletItem(IbookIcons.withdrawalRecycle, '一键回收', ''),
               ],
             ),
+            8.verticalSpace,
             const Divider(),
             _buildVenuesList()
           ],
@@ -79,41 +171,76 @@ class _WithdrawalPageState extends State<WithdrawalPage>
     return Column(
       children: [
         SizedBox(
-          height: animation.value == 0 ? 40.h : animation.value * 46 * 7,
-          child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 28,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                childAspectRatio: 2 / 1,
-              ),
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 10.h,
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [Text('IM体育'), Text('0.00')],
-                  ),
-                );
+          height: ((animation.value * 46) * 7).h,
+          child: Selector<WithdrawalProvider, WithdrawalProvider>(
+              selector: (p0, p1) => p1,
+              shouldRebuild: (previous, next) => false,
+              builder: (context, value, child) {
+                return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: value.veneues.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        childAspectRatio: 2 / 1,
+                        mainAxisSpacing: 10.r),
+                    itemBuilder: (context, index) {
+                      return _buildVenueItem(value.veneues[index]);
+                    });
               }),
         ),
         10.verticalSpace,
         InkWell(
           onTap: () {
-            controller.forward();
+            if (animation.value == 1) {
+              controller.reverse();
+            } else {
+              controller.forward();
+            }
           },
           child: SizedBox(
             height: 20.h,
-            child: Text(
-              '显示所有场馆',
-              style: TextStyle(fontSize: 14.sp, color: IbookTheme.grayColor2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '显示所有场馆',
+                  style:
+                      TextStyle(fontSize: 14.sp, color: IbookTheme.grayColor2),
+                ),
+                3.horizontalSpace,
+                Image.asset(IbookIcons.withdrawalArrowDown,
+                    width: 12.w, height: 12.w)
+              ],
             ),
           ),
         )
       ],
+    );
+  }
+
+  /// 渲染单个场馆
+  Widget _buildVenueItem(WithdrawalVenueModal venueModal) {
+    return Container(
+      height: 10.h,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            venueModal.api_title,
+            style: TextStyle(fontSize: 12.sp, color: IbookTheme.grayColor1),
+          ),
+          Text(
+            venueModal.balance,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14.sp,
+                color: Theme.of(context).primaryColor),
+          )
+        ],
+      ),
     );
   }
 

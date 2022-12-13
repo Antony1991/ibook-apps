@@ -7,9 +7,12 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import 'package:flutter/material.dart';
+import 'package:ibooks_app/routes/home_router.dart';
+import 'package:ibooks_app/routes/routes_util.dart';
 import 'package:ibooks_app/styles/icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibooks_app/styles/theme.dart';
+import 'package:ibooks_app/util/toast_util.dart';
 
 class ProfileFunction extends StatelessWidget {
   const ProfileFunction({super.key});
@@ -38,6 +41,19 @@ class ProfileFunction extends StatelessWidget {
       itemBuilder: ((context, index) {
         FunctionItemModal item = lists[index];
         return GestureDetector(
+          onTap: () {
+            if (item.label == '投注记录' || item.label == '交易记录') {
+              RoutesUtil.pushNamed(context, HomeRouter.bettingRecord);
+            } else if (item.label == '设置') {
+              RoutesUtil.pushNamed(context, HomeRouter.setting);
+            } else if (item.label == '意见反馈') {
+              RoutesUtil.pushNamed(context, HomeRouter.feedBack);
+            } else if (item.label == '个人资料') {
+              RoutesUtil.pushNamed(context, HomeRouter.profileUserInfo);
+            } else {
+              ToastUtil.show('功能开发中!');
+            }
+          },
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

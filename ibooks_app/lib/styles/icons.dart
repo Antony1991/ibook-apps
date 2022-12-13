@@ -85,6 +85,9 @@ class IbookIcons {
   /// 全局的
   static const globalService = 'assets/image/custom_service.png';
   static const globalSpin = 'assets/image/spin.png';
+  static const globalArrowRight = 'assets/image/arrow_right.png';
+  static const globalEyeClose = 'assets/image/eye_close.png';
+  static const globalEyeOpen = 'assets/image/eye_open.png';
 
   /// 存款
   static const depositTabbg = 'assets/image/deposit/deposit_tab_bg.png';
@@ -102,4 +105,6 @@ class IbookIcons {
       'assets/image/withdrawal_center_wallet.png';
   static const withdrawalLockWallet = 'assets/image/withdrawal_lock_wallet.png';
   static const withdrawalRecycle = 'assets/image/withdrawal_recycle.png';
+  static const withdrawalArrowDown = 'assets/image/withdrawal_arrow_down.png';
+  static const withdrawalAddBank = 'assets/image/withdrawal_add_bank.png';
 }

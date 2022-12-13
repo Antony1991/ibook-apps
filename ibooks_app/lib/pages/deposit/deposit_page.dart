@@ -105,7 +105,7 @@ class _DepositPageState extends State<DepositPage> with DepositPageBLoC {
             icon: Image.asset(
               IbookIcons.globalService,
               width: 22.w,
-              height: 22.h,
+              height: 22.w,
             ))
       ],
     );
