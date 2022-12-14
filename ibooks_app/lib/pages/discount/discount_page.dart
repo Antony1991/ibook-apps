@@ -7,6 +7,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import 'package:easy_refresh/easy_refresh.dart';
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibooks_app/pages/discount/widgets/activity_item.dart';
@@ -32,8 +33,8 @@ class _DiscountPageState extends State<DiscountPage>
   }
 
   /// 渲染内容
-  List<Widget> _buildContent() {
-    return [_buildActivityList()];
+  Widget _buildContent() {
+    return _buildActivityList();
   }
 
   /// 渲染单个列表
@@ -54,23 +55,6 @@ class _DiscountPageState extends State<DiscountPage>
                   child: ActivityItem(value.activityList[index]),
                 );
               });
-          // return CustomScrollView(
-          //   slivers: [
-          //     SliverList(
-          //         delegate: SliverChildBuilderDelegate(((context, index) {
-          //       return Selector<DiscountProvider, DiscountModal>(
-          //           builder: ((context, value, child) {
-          //             return Padding(
-          //               padding: EdgeInsets.symmetric(horizontal: 10.r),
-          //               child: ActivityItem(value),
-          //             );
-          //           }),
-          //           selector: (context, provider) =>
-          //               provider.activityList[index]);
-          //     }), childCount: value.activityList.length)),
-          //     const FooterLocator.sliver()
-          //   ],
-          // );
         }));
   }
 
@@ -85,7 +69,8 @@ class _DiscountPageState extends State<DiscountPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        body: NestedScrollView(
+        body: ExtendedNestedScrollView(
+      onlyOneScrollInBody: true,
       headerSliverBuilder: ((context, innerBoxIsScrolled) {
         return [
           SliverAppBar(
@@ -100,10 +85,7 @@ class _DiscountPageState extends State<DiscountPage>
           )
         ];
       }),
-      body: IndexedStack(
-        index: tabIndex,
-        children: _buildContent(),
-      ),
+      body: _buildContent(),
     ));
   }
 

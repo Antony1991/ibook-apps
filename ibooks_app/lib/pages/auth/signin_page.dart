@@ -12,6 +12,7 @@ import 'package:ibooks_app/routes/home_router.dart';
 import 'package:ibooks_app/routes/routes_util.dart';
 import 'package:ibooks_app/styles/icons.dart';
 import 'package:ibooks_app/styles/theme.dart';
+import 'package:ibooks_app/widgets/Spin.dart';
 import 'package:ibooks_app/widgets/data_entry/auth_button.dart';
 import 'package:ibooks_app/widgets/data_entry/auth_textfield.dart';
 
@@ -228,19 +229,29 @@ class _SigninPageState extends State<SigninPage> with SigninBLoc {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            color: Color.fromRGBO(14, 20, 56, 1),
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage(
-                  IbookIcons.authBg,
-                ))),
-        child: SingleChildScrollView(
-          child: _buildContent(),
-        ),
+      body: FutureBuilder(
+        future: _future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                  color: Color.fromRGBO(14, 20, 56, 1),
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        IbookIcons.authBg,
+                      ))),
+              child: SingleChildScrollView(
+                child: _buildContent(),
+              ),
+            );
+          }
+          return const Center(
+            child: Spin(),
+          );
+        },
       ),
     );
   }
@@ -252,12 +263,18 @@ mixin SigninBLoc on State<SigninPage> {
   String? username;
   String? password;
   int selectTabIndex = 0;
+  var _future;
 
   @override
   void initState() {
     userController = TextEditingController();
     pwdController = TextEditingController();
+    _future = initFuture();
     super.initState();
+  }
+
+  Future initFuture() async {
+    return await Future.delayed(const Duration(milliseconds: 300));
   }
 
   // 切换tab

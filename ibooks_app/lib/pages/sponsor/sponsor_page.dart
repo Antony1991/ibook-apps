@@ -36,7 +36,6 @@ class _SponsorPageState extends State<SponsorPage>
       body: EasyRefresh(
           refreshOnStartHeader: BuilderHeader(
               builder: (ctx, state) {
-                print("cstate${state.mode}");
                 if (state.mode == IndicatorMode.inactive ||
                     state.mode == IndicatorMode.done) {
                   return const SizedBox();
@@ -52,7 +51,6 @@ class _SponsorPageState extends State<SponsorPage>
               clamping: true,
               position: IndicatorPosition.above),
           onRefresh: () async {
-            await Future.delayed(const Duration(seconds: 2));
             Provider.of<SponsorProvider>(context, listen: false)
                 .initSponsorList();
           },

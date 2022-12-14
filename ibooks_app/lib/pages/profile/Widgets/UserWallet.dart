@@ -83,6 +83,8 @@ class _UserWalletState extends State<UserWallet> {
           RoutesUtil.pushNamed(context, HomeRouter.deposit);
         } else if (label == '取款') {
           RoutesUtil.pushNamed(context, HomeRouter.withdrawal);
+        } else if (label == '会员') {
+          RoutesUtil.pushNamed(context, HomeRouter.member);
         }
       },
       child: Padding(

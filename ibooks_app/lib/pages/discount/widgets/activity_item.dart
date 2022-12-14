@@ -23,8 +23,6 @@ class ActivityItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 350.w,
-      height: 106.h,
-      constraints: const BoxConstraints(),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.r),
           color: IbookTheme.whiteColorAppbar,
@@ -34,7 +32,7 @@ class ActivityItem extends StatelessWidget {
                 offset: const Offset(1, 2),
                 blurRadius: 3.r)
           ]),
-      margin: EdgeInsets.only(top: 15.sp),
+      margin: EdgeInsets.only(top: 10.r),
       // padding: EdgeInsets.all(10.r),
       alignment: Alignment.center,
       child: _buildContent(context),

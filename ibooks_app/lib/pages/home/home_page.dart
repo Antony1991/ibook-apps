@@ -7,22 +7,16 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:card_swiper/card_swiper.dart';
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibooks_app/pages/home/widgets/game_view.dart';
 import 'package:ibooks_app/routes/auth_router.dart';
 import 'package:ibooks_app/routes/routes_util.dart';
 import 'package:ibooks_app/styles/icons.dart';
 import 'package:ibooks_app/styles/theme.dart';
 import 'package:ibooks_app/widgets/swiper/ibook_indicator.dart';
-import 'package:marquee/marquee.dart';
 import 'package:marqueer/marqueer.dart';
-import 'package:path_provider/path_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -104,9 +98,17 @@ class _HomePageState extends State<HomePage>
                 Image.asset(IbookIcons.homeNotice, width: 14.sp, height: 14.h),
           ),
           Expanded(
-              child: Marquee(
-                  text:
-                      '---232323023020302302094993434340023423423042340234934934929400sdksdkskdksdkskdksdksdkskd'))
+              child: Marqueer(
+                  pps: 30,
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    height: 30.h,
+                    child: Text(
+                        '激情世界杯，决战卡塔尔：11月1日-12月18日期间竞猜助威瓜分2888万；免费竞猜晋级队伍瓜分8888888；指定赛事竞猜比分场场瓜分388万，首存会员竞猜成功更有额外嘉奖；竞猜投注BOB赞助球队【荷兰】、【威尔士】赛事早盘，可申请100%包赔最高1188，赞助球队晋级或夺冠再享免费红包雨；点击【用户推荐链接】邀请好友，最高可得566元并享有30天内队员有效流水0.15%返利！',
+                        style: TextStyle(
+                            color: IbookTheme.defaultTextColor,
+                            fontSize: 12.sp)),
+                  )))
         ],
       ),
     );
@@ -208,28 +210,6 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    // TODO: implement initState
-    rootBundle.loadString('assets/json/discount_json.json').then((value) async {
-      var valueMap = json.decode(value);
-      List<dynamic> newList = [];
-      for (var element in (valueMap['data'] as List<dynamic>)) {
-        Map<String, dynamic> map = {};
-        element = Map<String, dynamic>.from(element);
-        map['id'] = element['id'];
-        map['type'] = element['type'];
-        map['startAt'] = element['startAt'];
-        map['endAt'] = element['endAt'];
-        map['tag'] = element['tag'];
-        map['title'] = element['title'];
-        map['h5ListImgPath'] = element['h5ListImgPath'];
-        map['content'] = element['content'];
-        newList.add(map);
-      }
-      valueMap['data'] = newList;
-      final Directory directory = await getApplicationDocumentsDirectory();
-      final File file = File('${directory.path}/test.json');
-      await file.writeAsString(json.encode(valueMap));
-    });
     super.initState();
   }
 
@@ -241,17 +221,13 @@ class _HomePageState extends State<HomePage>
       //   elevation: 0,
       // ),
       backgroundColor: IbookTheme.whiteColor02,
-      body: EasyRefresh(
-          child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: _buildSwiper(),
-          ),
-          SliverToBoxAdapter(
-            child: _buildUser(),
-          )
+      body: Column(
+        children: [
+          _buildSwiper(),
+          _buildUser(),
+          const Expanded(child: GameView())
         ],
-      )),
+      ),
     );
   }
 

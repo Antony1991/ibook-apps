@@ -68,8 +68,8 @@ class ProfileFunction extends StatelessWidget {
               ]),
         );
       }),
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4, mainAxisExtent: 60.h),
     );
   }
 }

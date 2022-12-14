@@ -36,6 +36,8 @@ class IbookIcons {
   static const homeUserVip = 'assets/image/home/h_member.png';
   static const homeNotice = 'assets/image/home/h_notice.png';
   static const homeNoticeBg = 'assets/image/home/h_notice_bg.png';
+  static const homeSportIc = 'assets/image/home/sport_ic.png';
+  static const homeGameBanner = 'assets/image/home/game_banner.webp';
 
   /// 登录注册
   static const authBg = 'assets/image/auth/signin_bg.webp';
@@ -107,4 +109,19 @@ class IbookIcons {
   static const withdrawalRecycle = 'assets/image/withdrawal_recycle.png';
   static const withdrawalArrowDown = 'assets/image/withdrawal_arrow_down.png';
   static const withdrawalAddBank = 'assets/image/withdrawal_add_bank.png';
+
+  /// member
+  static const memberVip0 = 'assets/image/member/vip_0.webp';
+  static const memberVip1 = 'assets/image/member/vip_1.webp';
+  static const memberVip2 = 'assets/image/member/vip_2.webp';
+  static const memberVip3 = 'assets/image/member/vip_3.webp';
+  static const memberVip4 = 'assets/image/member/vip_4.webp';
+  static const memberVip5 = 'assets/image/member/vip_5.webp';
+  static const memberVip6 = 'assets/image/member/vip_6.webp';
+  static const memberVip7 = 'assets/image/member/vip_7.webp';
+  static const memberVip8 = 'assets/image/member/vip_8.webp';
+  static const memberVip9 = 'assets/image/member/vip_9.webp';
+  static const memberVip10 = 'assets/image/member/vip_10.webp';
+  static const memberTimeUp = 'assets/image/member/vip_time_up.png';
+  static const memberMoneyUp = 'assets/image/member/vip_money_up.png';
 }

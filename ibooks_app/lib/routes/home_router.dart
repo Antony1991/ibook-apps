@@ -13,6 +13,8 @@ import 'package:ibooks_app/pages/deposit/deposit_page.dart';
 import 'package:ibooks_app/pages/discount/discount_detail_page.dart';
 import 'package:ibooks_app/pages/feedback/feedback_page.dart';
 import 'package:ibooks_app/pages/index/index_route.dart';
+import 'package:ibooks_app/pages/member/member_page.dart';
+import 'package:ibooks_app/pages/profile/profile_mail_page.dart';
 import 'package:ibooks_app/pages/profile/profile_userinfo_page.dart';
 import 'package:ibooks_app/pages/setting/setting_page.dart';
 import 'package:ibooks_app/pages/setting/setting_password_page.dart';
@@ -30,6 +32,8 @@ class HomeRouter {
   static String settingPassword = '/profile/setting/password';
   static String feedBack = '/profile/feedback';
   static String profileUserInfo = '/profile/userinfo';
+  static String profileMail = '/profile/mail';
+  static String member = '/member';
   static Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     return {
       home: (context) => const IndexRoute(),
@@ -41,7 +45,9 @@ class HomeRouter {
       setting: (context) => const SettingPage(),
       settingPassword: (context) => const SettingPasswordPage(),
       feedBack: (context) => const FeedbackPage(),
-      profileUserInfo: (context) => const ProfileUserInfoPage()
+      profileUserInfo: (context) => const ProfileUserInfoPage(),
+      profileMail: (context) => const ProfileMailPage(),
+      member: (context) => const MemberPage()
     };
   }
 }

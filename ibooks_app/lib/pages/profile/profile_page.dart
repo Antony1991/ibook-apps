@@ -15,6 +15,8 @@ import 'package:ibooks_app/pages/profile/Widgets/ProfileFunction.dart';
 import 'package:ibooks_app/pages/profile/Widgets/UserInfo.dart';
 import 'package:ibooks_app/pages/profile/Widgets/UserWallet.dart';
 import 'package:ibooks_app/provider/user_provider.dart';
+import 'package:ibooks_app/routes/home_router.dart';
+import 'package:ibooks_app/routes/routes_util.dart';
 import 'package:ibooks_app/styles/icons.dart';
 import 'package:ibooks_app/styles/theme.dart';
 import 'package:ibooks_app/widgets/layout/Ibook_box_shadow.dart';
@@ -49,7 +51,9 @@ class _ProfilePageState extends State<ProfilePage>
                           ? Expanded(child: UserInfo(user.userInfo!))
                           : const SizedBox())),
                   InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        RoutesUtil.pushNamed(context, HomeRouter.profileMail);
+                      },
                       child: Image.asset(IbookIcons.profileNotice,
                           width: 16.w, height: 16.h))
                 ],
@@ -96,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage>
           child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 10.r),
+            padding: EdgeInsets.symmetric(vertical: 10.r),
             child: Row(
               children: [
                 Image.asset(IbookIcons.profileTitleBar,
