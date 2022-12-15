@@ -42,6 +42,37 @@ class _GameViewState extends State<GameView> {
   ];
   int activeIndex = 0;
   final ScrollController _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      double offset = _controller.offset;
+
+      /// 默认设置每个类型中有4条数据
+      /// 每条数据的高度是105，总高度是总条数*105，减去当前的滚动距离
+      double lastIdx = (28 * 105 - offset) / (105 * 4).truncate();
+      int idx = menus.length - 1 - lastIdx.toInt();
+      if (idx <= 0) {
+        idx = 0;
+      } else if (idx >= menus.length - 1) {
+        idx = menus.length - 1;
+      }
+      if (idx != activeIndex) {
+        setState(() {
+          activeIndex = idx;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -59,17 +90,21 @@ class _GameViewState extends State<GameView> {
             menus.indexWhere((element) => element.value == gameModel.value);
         int middleIdx = (menus.length / 2).truncate();
         double marginValue = 0;
+
+        /// 先确定好中间的那个索引
+        /// 如果小于中间索引，就用索引*初始的margin
         if (middleIdx >= idx) {
           marginValue = (idx * initVal).toDouble();
         } else {
           marginValue = ((menus.length - idx - 1) * initVal).toDouble();
         }
-        print('marginValue$marginValue');
         return InkWell(
             onTap: () {
-              setState(() {
-                activeIndex = idx;
-              });
+              if (activeIndex != idx) {
+                setState(() {
+                  activeIndex = idx;
+                });
+              }
               _controller.animateTo(((105 * 4) * idx).h,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.fastOutSlowIn);
@@ -93,12 +128,17 @@ class _GameViewState extends State<GameView> {
       flex: 1,
       child: Container(
         child: ListView.builder(
+            shrinkWrap: true,
             controller: _controller,
             itemCount: 27,
             itemBuilder: (context, index) {
               return Container(
-                child: Image.asset(IbookIcons.homeGameBanner,
-                    width: 168.w, height: 105.h),
+                child: Image.asset(
+                    index % 2 == 0
+                        ? IbookIcons.homeGameBanner
+                        : IbookIcons.homeSportBanner,
+                    width: 168.w,
+                    height: 105.h),
               );
             }),
       ),

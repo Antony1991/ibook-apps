@@ -37,6 +37,7 @@ class IbookIcons {
   static const homeNotice = 'assets/image/home/h_notice.png';
   static const homeNoticeBg = 'assets/image/home/h_notice_bg.png';
   static const homeGameBanner = 'assets/image/home/game_banner.webp';
+  static const homeSportBanner = 'assets/image/home/sport_banner3.webp';
 
   /// game icon
   static const homeSportIc = 'assets/image/home/sport_ic.png';
