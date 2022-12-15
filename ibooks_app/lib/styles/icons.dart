@@ -36,8 +36,23 @@ class IbookIcons {
   static const homeUserVip = 'assets/image/home/h_member.png';
   static const homeNotice = 'assets/image/home/h_notice.png';
   static const homeNoticeBg = 'assets/image/home/h_notice_bg.png';
-  static const homeSportIc = 'assets/image/home/sport_ic.png';
   static const homeGameBanner = 'assets/image/home/game_banner.webp';
+
+  /// game icon
+  static const homeSportIc = 'assets/image/home/sport_ic.png';
+  static const homeEgameIc = 'assets/image/home/egame_ic.png';
+  static const homeLiveIc = 'assets/image/home/live_ic.png';
+  static const homeChessIc = 'assets/image/home/chess_ic.png';
+  static const homeLotteryIc = 'assets/image/home/lottery_ic.png';
+  static const homeGameIc = 'assets/image/home/game_ic.png';
+  static const homeFishIc = 'assets/image/home/fish_ic.png';
+  static const homeActiveSportIc = 'assets/image/home/sport_active_ic.png';
+  static const homeActiveEgameIc = 'assets/image/home/egame_active_ic.png';
+  static const homeActiveLiveIc = 'assets/image/home/live_active_ic.png';
+  static const homeActiveChessIc = 'assets/image/home/chess_active_ic.png';
+  static const homeActiveLotteryIc = 'assets/image/home/lottery_active_ic.png';
+  static const homeActiveGameIc = 'assets/image/home/game_active_ic.png';
+  static const homeActiveFishIc = 'assets/image/home/fish_active_ic.png';
 
   /// 登录注册
   static const authBg = 'assets/image/auth/signin_bg.webp';
